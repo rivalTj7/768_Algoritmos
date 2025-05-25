@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagramas de Flujo - Proyecto Inventario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #003366;
+            text-align: center;
+            border-bottom: 3px solid #003366;
+            padding-bottom: 20px;
+        }
+        h2 {
+            color: #0066cc;
+            margin-top: 40px;
+            border-left: 5px solid #0066cc;
+            padding-left: 15px;
+        }
+        .diagram {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+        }
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .node {
+            padding: 15px 30px;
+            text-align: center;
+            font-weight: bold;
+            position: relative;
+            min-width: 200px;
+        }
+        .start-end {
+            background-color: #28a745;
+            color: white;
+            border-radius: 50px;
+        }
+        .process {
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+        .decision {
+            background-color: #ffc107;
+            color: #333;
+            transform: rotate(45deg);
+            padding: 25px;
+            margin: 30px 0;
+        }
+        .decision-text {
+            transform: rotate(-45deg);
+            display: inline-block;
+        }
+        .input-output {
+            background-color: #17a2b8;
+            color: white;
+            border-radius: 5px;
+            transform: skewX(-15deg);
+            padding: 15px 40px;
+        }
+        .input-output-text {
+            transform: skewX(15deg);
+            display: inline-block;
+        }
+        .arrow {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 20px solid #333;
+            margin: -10px 0;
+        }
+        .branch {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            gap: 50px;
+            align-items: flex-start;
+        }
+        .branch-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+        .notes {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-left: 4px solid #6c757d;
+            margin: 20px 0;
+            font-style: italic;
+        }
+        .code-hint {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: monospace;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .validation-box {
+            background-color: #fff3cd;
+            border: 2px solid #ffeaa7;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .example-box {
+            background-color: #d4edda;
+            border: 2px solid #c3e6cb;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DIAGRAMAS DE FLUJO - SISTEMA DE INVENTARIO USAC STORE</h1>
+        
+        <div class="notes">
+            <strong>IMPORTANTE:</strong> Estos diagramas deben seguirse EXACTAMENTE como están. Cada forma tiene un significado específico:
+            <ul>
+                <li>🟢 Óvalo verde = Inicio/Fin</li>
+                <li>🔵 Rectángulo azul = Proceso</li>
+                <li>🔶 Rombo amarillo = Decisión (if/else)</li>
+                <li>🔷 Paralelogramo azul claro = Entrada/Salida</li>
+            </ul>
+        </div>
+
+        <!-- DIAGRAMA 1: MENÚ PRINCIPAL -->
+        <div class="diagram">
+            <h2>DIAGRAMA 1: MENÚ PRINCIPAL</h2>
+            
+            <div class="flowchart">
+                <div class="node start-end">INICIO</div>
+                <div class="arrow"></div>
+                
+                <div class="node process">Inicializar variables globales:<br>
+                    productos = 0<br>
+                    MAX_PRODUCTOS = 1000</div>
+                <div class="arrow"></div>
+                
+                <div class="node process">REPETIR</div>
+                <div class="arrow"></div>
+                
+                <div class="node input-output">
+                    <span class="input-output-text">MOSTRAR:<br>
+                    "====================="<br>
+                    "TIENDA USAC"<br>
+                    "1. Agregar Producto"<br>
+                    "2. Vender Producto"<br>
+                    "3. Ver Inventario"<br>
+                    "4. Reportes"<br>
+                    "5. Estadísticas"<br>
+                    "6. Salir"</span>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="node input-output">
+                    <span class="input-output-text">LEER opcion</span>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="node decision">
+                    <span class="decision-text">¿opcion es<br>número?</span>
+                </div>
+                
+                <div class="branch">
+                    <div class="branch-container">
+                        <div style="color: green; font-weight: bold;">SÍ</div>
+                        <div class="arrow"></div>
+                        <div class="node decision">
+                            <span class="decision-text">¿opcion<br>entre<br>1 y 6?</span>
+                        </div>
+                        <div class="branch">
+                            <div class="branch-container">
+                                <div style="color: green; font-weight: bold;">SÍ</div>
+                                <div class="arrow"></div>
+                                <div class="node process">SWITCH (opcion)<br>
+                                    CASO 1: agregarProducto()<br>
+                                    CASO 2: venderProducto()<br>
+                                    CASO 3: verInventario()<br>
+                                    CASO 4: mostrarReportes()<br>
+                                    CASO 5: mostrarEstadisticas()<br>
+                                    CASO 6: salir = true</div>
+                            </div>
+                            <div class="branch-container">
+                                <div style="color: red; font-weight: bold;">NO</div>
+                                <div class="arrow"></div>
+                                <div class="node input-output">
+                                    <span class="input-output-text">MOSTRAR:<br>"Opción inválida"</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="branch-container">
+                        <div style="color: red; font-weight: bold;">NO</div>
+                        <div class="arrow"></div>
+                        <div class="node input-output">
+                            <span class="input-output-text">MOSTRAR:<br>"Error: Ingrese<br>solo números"</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="arrow"></div>
+                <div class="node decision">
+                    <span class="decision-text">¿salir == true?</span>
+                </div>
+                
+                <div class="branch">
+                    <div class="branch-container">
+                        <div style="color: green; font-weight: bold;">SÍ</div>
+                        <div class="arrow"></div>
+                        <div class="node start-end">FIN</div>
+                    </div>
+                    <div class="branch-container">
+                        <div style="color: red; font-weight: bold;">NO</div>
+                        <div class="arrow"></div>
+                        <div class="node process">Volver a REPETIR</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-hint">
+                <strong>Pista de código:</strong><br>
+                Scanner scanner = new Scanner(System.in);<br>
+                boolean salir = false;<br>
+                while (!salir) { ... }
+            </div>
+        </div>
+
+        <!-- DIAGRAMA 2: AGREGAR PRODUCTO -->
+        <div class="diagram">
+            <h2>DIAGRAMA 2: AGREGAR PRODUCTO</h2>
+            
+            <div class="flowchart">
+                <div class="node start-end">INICIO agregarProducto()</div>
+                <div class="arrow"></div>
+                
+                <div class="node decision">
+                    <span class="decision-text">¿productos<br>< MAX?</span>
+                </div>
+                
+                <div class="branch">
+                    <div class="branch-container">
+                        <div style="color: green; font-weight: bold;">SÍ</div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node input-output">
+                            <span class="input-output-text">MOSTRAR:<br>"--- AGREGAR PRODUCTO ---"</span>
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node input-output">
+                            <span class="input-output-text">LEER codigo<br>"Código (5 dígitos):"</span>
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node decision">
+                            <span class="decision-text">¿codigo tiene<br>5 dígitos?</span>
+                        </div>
+                        
+                        <div class="branch">
+                            <div class="branch-container">
+                                <div style="color: green; font-weight: bold;">SÍ</div>
+                                <div class="arrow"></div>
+                                
+                                <div class="node process">binario = convertirABinario(codigo)</div>
+                                <div class="arrow"></div>
+                                
+                                <div class="node input-output">
+                                    <span class="input-output-text">MOSTRAR:<br>"Código en binario: " + binario</span>
+                                </div>
+                                <div class="arrow"></div>
+                                
+                                <div class="node decision">
+                                    <span class="decision-text">¿codigo ya<br>existe?</span>
+                                </div>
+                                
+                                <div class="branch">
+                                    <div class="branch-container">
+                                        <div style="color: red; font-weight: bold;">SÍ</div>
+                                        <div class="arrow"></div>
+                                        <div class="node input-output">
+                                            <span class="input-output-text">MOSTRAR:<br>"Error: Código duplicado"</span>
+                                        </div>
+                                    </div>
+                                    <div class="branch-container">
+                                        <div style="color: green; font-weight: bold;">NO</div>
+                                        <div class="arrow"></div>
+                                        
+                                        <div class="node input-output">
+                                            <span class="input-output-text">LEER nombre<br>"Nombre del producto:"</span>
+                                        </div>
+                                        <div class="arrow"></div>
+                                        
+                                        <div class="node input-output">
+                                            <span class="input-output-text">LEER precio<br>"Precio (Q):"</span>
+                                        </div>
+                                        <div class="arrow"></div>
+                                        
+                                        <div class="node decision">
+                                            <span class="decision-text">¿precio > 0?</span>
+                                        </div>
+                                        
+                                        <div class="branch">
+                                            <div class="branch-container">
+                                                <div style="color: green; font-weight: bold;">SÍ</div>
+                                                <div class="arrow"></div>
+                                                
+                                                <div class="node input-output">
+                                                    <span class="input-output-text">LEER cantidad<br>"Cantidad inicial:"</span>
+                                                </div>
+                                                <div class="arrow"></div>
+                                                
+                                                <div class="node decision">
+                                                    <span class="decision-text">¿cantidad > 0?</span>
+                                                </div>
+                                                
+                                                <div class="branch">
+                                                    <div class="branch-container">
+                                                        <div style="color: green; font-weight: bold;">SÍ</div>
+                                                        <div class="arrow"></div>
+                                                        
+                                                        <div class="node process">
+                                                            codigos[productos] = codigo<br>
+                                                            nombres[productos] = nombre<br>
+                                                            precios[productos] = precio<br>
+                                                            cantidades[productos] = cantidad<br>
+                                                            vendidos[productos] = 0<br>
+                                                            productos++
+                                                        </div>
+                                                        <div class="arrow"></div>
+                                                        
+                                                        <div class="node input-output">
+                                                            <span class="input-output-text">MOSTRAR:<br>"✓ Producto agregado"</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="branch-container">
+                                                        <div style="color: red; font-weight: bold;">NO</div>
+                                                        <div class="arrow"></div>
+                                                        <div class="node input-output">
+                                                            <span class="input-output-text">MOSTRAR:<br>"Error: Cantidad inválida"</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="branch-container">
+                                                <div style="color: red; font-weight: bold;">NO</div>
+                                                <div class="arrow"></div>
+                                                <div class="node input-output">
+                                                    <span class="input-output-text">MOSTRAR:<br>"Error: Precio inválido"</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="branch-container">
+                                <div style="color: red; font-weight: bold;">NO</div>
+                                <div class="arrow"></div>
+                                <div class="node input-output">
+                                    <span class="input-output-text">MOSTRAR:<br>"Error: Código debe<br>tener 5 dígitos"</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="branch-container">
+                        <div style="color: red; font-weight: bold;">NO</div>
+                        <div class="arrow"></div>
+                        <div class="node input-output">
+                            <span class="input-output-text">MOSTRAR:<br>"Inventario lleno"</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="arrow"></div>
+                <div class="node start-end">FIN agregarProducto()</div>
+            </div>
+
+            <div class="validation-box">
+                <strong>Función convertirABinario(int numero):</strong><br>
+                1. Crear variable String resultado = ""<br>
+                2. MIENTRAS numero > 0:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;- resto = numero % 2<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;- resultado = resto + resultado<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;- numero = numero / 2<br>
+                3. RETORNAR resultado
+            </div>
+        </div>
+
+        <!-- DIAGRAMA 3: VENDER PRODUCTO -->
+        <div class="diagram">
+            <h2>DIAGRAMA 3: BUSCAR Y VENDER PRODUCTO</h2>
+            
+            <div class="flowchart">
+                <div class="node start-end">INICIO venderProducto()</div>
+                <div class="arrow"></div>
+                
+                <div class="node decision">
+                    <span class="decision-text">¿productos > 0?</span>
+                </div>
+                
+                <div class="branch">
+                    <div class="branch-container">
+                        <div style="color: green; font-weight: bold;">SÍ</div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node input-output">
+                            <span class="input-output-text">MOSTRAR:<br>"--- VENDER PRODUCTO ---"</span>
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node input-output">
+                            <span class="input-output-text">LEER codigoBuscar<br>"Ingrese código:"</span>
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node process">posicion = -1<br>i = 0</div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node process">MIENTRAS i < productos Y posicion == -1</div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node decision">
+                            <span class="decision-text">¿codigos[i] ==<br>codigoBuscar?</span>
+                        </div>
+                        
+                        <div class="branch">
+                            <div class="branch-container">
+                                <div style="color: green; font-weight: bold;">SÍ</div>
+                                <div class="arrow"></div>
+                                <div class="node process">posicion = i</div>
+                            </div>
+                            <div class="branch-container">
+                                <div style="color: red; font-weight: bold;">NO</div>
+                                <div class="arrow"></div>
+                                <div class="node process">i++</div>
+                            </div>
+                        </div>
+                        
+                        <div class="arrow"></div>
+                        <div class="node decision">
+                            <span class="decision-text">¿posicion != -1?</span>
+                        </div>
+                        
+                        <div class="branch">
+                            <div class="branch-container">
+                                <div style="color: green; font-weight: bold;">SÍ</div>
+                                <div class="arrow"></div>
+                                
+                                <div class="node input-output">
+                                    <span class="input-output-text">MOSTRAR:<br>
+                                    "Producto: " + nombres[posicion]<br>
+                                    "Precio: Q" + precios[posicion]<br>
+                                    "Stock: " + cantidades[posicion]</span>
+                                </div>
+                                <div class="arrow"></div>
+                                
+                                <div class="node decision">
+                                    <span class="decision-text">¿cantidades[posicion]<br>> 0?</span>
+                                </div>
+                                
+                                <div class="branch">
+                                    <div class="branch-container">
+                                        <div style="color: green; font-weight: bold;">SÍ</div>
+                                        <div class="arrow"></div>
+                                        
+                                        <div class="node input-output">
+                                            <span class="input-output-text">LEER cantidadVender<br>"¿Cuántos vender?"</span>
+                                        </div>
+                                        <div class="arrow"></div>
+                                        
+                                        <div class="node decision">
+                                            <span class="decision-text">¿cantidadVender <=<br>cantidades[posicion]?</span>
+                                        </div>
+                                        
+                                        <div class="branch">
+                                            <div class="branch-container">
+                                                <div style="color: green; font-weight: bold;">SÍ</div>
+                                                <div class="arrow"></div>
+                                                
+                                                <div class="node process">
+                                                    cantidades[posicion] -= cantidadVender<br>
+                                                    vendidos[posicion] += cantidadVender<br>
+                                                    total = cantidadVender * precios[posicion]
+                                                </div>
+                                                <div class="arrow"></div>
+                                                
+                                                <div class="node input-output">
+                                                    <span class="input-output-text">MOSTRAR:<br>
+                                                    "✓ Venta exitosa"<br>
+                                                    "Total: Q" + total</span>
+                                                </div>
+                                                <div class="arrow"></div>
+                                                
+                                                <div class="node decision">
+                                                    <span class="decision-text">¿cantidades[posicion]<br>< 10?</span>
+                                                </div>
+                                                
+                                                <div class="branch">
+                                                    <div class="branch-container">
+                                                        <div style="color: green; font-weight: bold;">SÍ</div>
+                                                        <div class="arrow"></div>
+                                                        <div class="node input-output">
+                                                            <span class="input-output-text">MOSTRAR:<br>
+                                                            "⚠️ ALERTA: Stock bajo!"<br>
+                                                            "Quedan: " + cantidades[posicion]</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="branch-container">
+                                                <div style="color: red; font-weight: bold;">NO</div>
+                                                <div class="arrow"></div>
+                                                <div class="node input-output">
+                                                    <span class="input-output-text">MOSTRAR:<br>"Error: Stock insuficiente"</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="branch-container">
+                                        <div style="color: red; font-weight: bold;">NO</div>
+                                        <div class="arrow"></div>
+                                        <div class="node input-output">
+                                            <span class="input-output-text">MOSTRAR:<br>"Sin stock disponible"</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="branch-container">
+                                <div style="color: red; font-weight: bold;">NO</div>
+                                <div class="arrow"></div>
+                                <div class="node input-output">
+                                    <span class="input-output-text">MOSTRAR:<br>"Producto no encontrado"</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="branch-container">
+                        <div style="color: red; font-weight: bold;">NO</div>
+                        <div class="arrow"></div>
+                        <div class="node input-output">
+                            <span class="input-output-text">MOSTRAR:<br>"No hay productos<br>en el inventario"</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="arrow"></div>
+                <div class="node start-end">FIN venderProducto()</div>
+            </div>
+        </div>
+
+        <!-- DIAGRAMA 4: REPORTES -->
+        <div class="diagram">
+            <h2>DIAGRAMA 4: REPORTES BÁSICOS</h2>
+            
+            <div class="flowchart">
+                <div class="node start-end">INICIO mostrarReportes()</div>
+                <div class="arrow"></div>
+                
+                <div class="node decision">
+                    <span class="decision-text">¿productos > 0?</span>
+                </div>
+                
+                <div class="branch">
+                    <div class="branch-container">
+                        <div style="color: green; font-weight: bold;">SÍ</div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node input-output">
+                            <span class="input-output-text">MOSTRAR:<br>"=== REPORTES ==="</span>
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <!-- Calcular producto más vendido -->
+                        <div class="node process">
+                            maxVendido = 0<br>
+                            posMaxVendido = 0<br>
+                            PARA i = 0 HASTA productos-1:<br>
+                            &nbsp;&nbsp;SI vendidos[i] > maxVendido:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;maxVendido = vendidos[i]<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;posMaxVendido = i
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node input-output">
+                            <span class="input-output-text">MOSTRAR:<br>
+                            "1. PRODUCTO MÁS VENDIDO:"<br>
+                            nombres[posMaxVendido] + " (" + maxVendido + " unidades)"</span>
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <!-- Calcular producto con menos stock -->
+                        <div class="node process">
+                            minStock = cantidades[0]<br>
+                            posMinStock = 0<br>
+                            PARA i = 1 HASTA productos-1:<br>
+                            &nbsp;&nbsp;SI cantidades[i] < minStock:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;minStock = cantidades[i]<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;posMinStock = i
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node input-output">
+                            <span class="input-output-text">MOSTRAR:<br>
+                            "2. PRODUCTO CON MENOS STOCK:"<br>
+                            nombres[posMinStock] + " (" + minStock + " unidades)"</span>
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <!-- Calcular valor total -->
+                        <div class="node process">
+                            valorTotal = 0<br>
+                            PARA i = 0 HASTA productos-1:<br>
+                            &nbsp;&nbsp;valorTotal += cantidades[i] * precios[i]
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node input-output">
+                            <span class="input-output-text">MOSTRAR:<br>
+                            "3. VALOR TOTAL DEL INVENTARIO: Q" + valorTotal</span>
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <!-- Productos por agotarse -->
+                        <div class="node input-output">
+                            <span class="input-output-text">MOSTRAR:<br>
+                            "4. PRODUCTOS POR AGOTARSE (menos de 10):"</span>
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node process">
+                            hayProductosBajos = false<br>
+                            PARA i = 0 HASTA productos-1:<br>
+                            &nbsp;&nbsp;SI cantidades[i] < 10:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;MOSTRAR: "- " + nombres[i] + ": " + cantidades[i]<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;hayProductosBajos = true
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node decision">
+                            <span class="decision-text">¿hayProductosBajos<br>== false?</span>
+                        </div>
+                        
+                        <div class="branch">
+                            <div class="branch-container">
+                                <div style="color: green; font-weight: bold;">SÍ</div>
+                                <div class="arrow"></div>
+                                <div class="node input-output">
+                                    <span class="input-output-text">MOSTRAR:<br>"Ningún producto con stock bajo"</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="branch-container">
+                        <div style="color: red; font-weight: bold;">NO</div>
+                        <div class="arrow"></div>
+                        <div class="node input-output">
+                            <span class="input-output-text">MOSTRAR:<br>"No hay datos para reportes"</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="arrow"></div>
+                <div class="node start-end">FIN mostrarReportes()</div>
+            </div>
+        </div>
+
+        <!-- DIAGRAMA 5: ESTADÍSTICAS -->
+        <div class="diagram">
+            <h2>DIAGRAMA 5: ESTADÍSTICAS</h2>
+            
+            <div class="flowchart">
+                <div class="node start-end">INICIO mostrarEstadisticas()</div>
+                <div class="arrow"></div>
+                
+                <div class="node decision">
+                    <span class="decision-text">¿productos > 0?</span>
+                </div>
+                
+                <div class="branch">
+                    <div class="branch-container">
+                        <div style="color: green; font-weight: bold;">SÍ</div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node input-output">
+                            <span class="input-output-text">MOSTRAR:<br>"=== ESTADÍSTICAS ==="</span>
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <!-- Calcular promedio de precios -->
+                        <div class="node process">
+                            sumaPrecios = 0<br>
+                            PARA i = 0 HASTA productos-1:<br>
+                            &nbsp;&nbsp;sumaPrecios += precios[i]<br>
+                            promedio = sumaPrecios / productos
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node input-output">
+                            <span class="input-output-text">MOSTRAR:<br>
+                            "1. PROMEDIO DE PRECIOS: Q" + promedio</span>
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <!-- Productos sobre el promedio -->
+                        <div class="node input-output">
+                            <span class="input-output-text">MOSTRAR:<br>
+                            "2. PRODUCTOS SOBRE EL PROMEDIO:"</span>
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node process">
+                            contadorSobre = 0<br>
+                            PARA i = 0 HASTA productos-1:<br>
+                            &nbsp;&nbsp;SI precios[i] > promedio:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;MOSTRAR: "- " + nombres[i] + ": Q" + precios[i]<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;contadorSobre++
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node input-output">
+                            <span class="input-output-text">MOSTRAR:<br>
+                            "Total: " + contadorSobre + " productos"</span>
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <!-- Productos bajo el promedio -->
+                        <div class="node input-output">
+                            <span class="input-output-text">MOSTRAR:<br>
+                            "3. PRODUCTOS BAJO EL PROMEDIO:"</span>
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node process">
+                            contadorBajo = 0<br>
+                            PARA i = 0 HASTA productos-1:<br>
+                            &nbsp;&nbsp;SI precios[i] < promedio:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;MOSTRAR: "- " + nombres[i] + ": Q" + precios[i]<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;contadorBajo++
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node input-output">
+                            <span class="input-output-text">MOSTRAR:<br>
+                            "Total: " + contadorBajo + " productos"</span>
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <!-- Ordenamiento por precio (Bubble Sort) -->
+                        <div class="node input-output">
+                            <span class="input-output-text">MOSTRAR:<br>
+                            "4. ORDENAR PRODUCTOS"<br>
+                            "a) Por precio"<br>
+                            "b) Por cantidad"<br>
+                            "Elija opción:"</span>
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node input-output">
+                            <span class="input-output-text">LEER opcionOrden</span>
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <!-- Crear copias de arrays para ordenar -->
+                        <div class="node process">
+                            // Crear copias de los arrays<br>
+                            PARA i = 0 HASTA productos-1:<br>
+                            &nbsp;&nbsp;tempCodigos[i] = codigos[i]<br>
+                            &nbsp;&nbsp;tempNombres[i] = nombres[i]<br>
+                            &nbsp;&nbsp;tempPrecios[i] = precios[i]<br>
+                            &nbsp;&nbsp;tempCantidades[i] = cantidades[i]
+                        </div>
+                        <div class="arrow"></div>
+                        
+                        <div class="node decision">
+                            <span class="decision-text">¿opcionOrden<br>== 'a'?</span>
+                        </div>
+                        
+                        <div class="branch">
+                            <div class="branch-container">
+                                <div style="color: green; font-weight: bold;">SÍ</div>
+                                <div class="arrow"></div>
+                                
+                                <div class="node process">
+                                    // Ordenar por precio (Bubble Sort)<br>
+                                    PARA i = 0 HASTA productos-2:<br>
+                                    &nbsp;&nbsp;PARA j = 0 HASTA productos-2-i:<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;SI tempPrecios[j] > tempPrecios[j+1]:<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Intercambiar todos los arrays<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;intercambiar(j, j+1)
+                                </div>
+                                <div class="arrow"></div>
+                                
+                                <div class="node input-output">
+                                    <span class="input-output-text">MOSTRAR:<br>
+                                    "PRODUCTOS ORDENADOS POR PRECIO:"</span>
+                                </div>
+                            </div>
+                            <div class="branch-container">
+                                <div style="color: red; font-weight: bold;">NO</div>
+                                <div class="arrow"></div>
+                                
+                                <div class="node decision">
+                                    <span class="decision-text">¿opcionOrden<br>== 'b'?</span>
+                                </div>
+                                
+                                <div class="branch">
+                                    <div class="branch-container">
+                                        <div style="color: green; font-weight: bold;">SÍ</div>
+                                        <div class="arrow"></div>
+                                        
+                                        <div class="node process">
+                                            // Ordenar por cantidad<br>
+                                            PARA i = 0 HASTA productos-2:<br>
+                                            &nbsp;&nbsp;PARA j = 0 HASTA productos-2-i:<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;SI tempCantidades[j] > tempCantidades[j+1]:<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;intercambiar(j, j+1)
+                                        </div>
+                                        <div class="arrow"></div>
+                                        
+                                        <div class="node input-output">
+                                            <span class="input-output-text">MOSTRAR:<br>
+                                            "PRODUCTOS ORDENADOS POR CANTIDAD:"</span>
+                                        </div>
+                                    </div>
+                                    <div class="branch-container">
+                                        <div style="color: red; font-weight: bold;">NO</div>
+                                        <div class="arrow"></div>
+                                        <div class="node input-output">
+                                            <span class="input-output-text">MOSTRAR:<br>"Opción inválida"</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="arrow"></div>
+                        
+                        <!-- Mostrar TOP 10 -->
+                        <div class="node process">
+                            limite = 10<br>
+                            SI productos < 10:<br>
+                            &nbsp;&nbsp;limite = productos<br>
+                            <br>
+                            MOSTRAR: "TOP " + limite + " PRODUCTOS:"<br>
+                            PARA i = 0 HASTA limite-1:<br>
+                            &nbsp;&nbsp;MOSTRAR: (i+1) + ". " + tempNombres[i]<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;+ " - Q" + tempPrecios[i]<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;+ " - Stock: " + tempCantidades[i]
+                        </div>
+                    </div>
+                    <div class="branch-container">
+                        <div style="color: red; font-weight: bold;">NO</div>
+                        <div class="arrow"></div>
+                        <div class="node input-output">
+                            <span class="input-output-text">MOSTRAR:<br>"No hay datos para estadísticas"</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="arrow"></div>
+                <div class="node start-end">FIN mostrarEstadisticas()</div>
+            </div>
+
+            <div class="validation-box">
+                <strong>Función intercambiar(int pos1, int pos2):</strong><br>
+                // Intercambiar códigos<br>
+                tempCodigo = tempCodigos[pos1]<br>
+                tempCodigos[pos1] = tempCodigos[pos2]<br>
+                tempCodigos[pos2] = tempCodigo<br>
+                <br>
+                // Hacer lo mismo para nombres, precios y cantidades<br>
+                (Repetir el proceso para cada array)
+            </div>
+        </div>
+
+        <!-- SECCIÓN DE VALIDACIONES Y FUNCIONES AUXILIARES -->
+        <div class="diagram">
+            <h2>FUNCIONES AUXILIARES REQUERIDAS</h2>
+            
+            <table>
+                <tr>
+                    <th>Función</th>
+                    <th>Descripción</th>
+                    <th>Parámetros</th>
+                    <th>Retorna</th>
+                </tr>
+                <tr>
+                    <td>convertirABinario</td>
+                    <td>Convierte un número entero a su representación binaria</td>
+                    <td>int numero</td>
+                    <td>String binario</td>
+                </tr>
+                <tr>
+                    <td>buscarProducto</td>
+                    <td>Busca un producto por código</td>
+                    <td>String codigo</td>
+                    <td>int posición (-1 si no encuentra)</td>
+                </tr>
+                <tr>
+                    <td>verInventario</td>
+                    <td>Muestra todos los productos en formato tabla</td>
+                    <td>ninguno</td>
+                    <td>void</td>
+                </tr>
+                <tr>
+                    <td>intercambiar</td>
+                    <td>Intercambia elementos en posiciones de arrays</td>
+                    <td>int pos1, int pos2</td>
+                    <td>void</td>
+                </tr>
+            </table>
+
+            <div class="example-box">
+                <h3>Ejemplo de Formato para verInventario():</h3>
+                <pre>
+===========================================
+CÓDIGO  | NOMBRE          | PRECIO | STOCK
+===========================================
+10001   | Lapicero BIC    | Q3.50  | 150
+10002   | Cuaderno 100h   | Q12.00 | 75
+10003   | Borrador Faber  | Q2.50  | 200
+===========================================
+Total productos: 3
+Valor total inventario: Q2,512.50
+                </pre>
+            </div>
+        </div>
+
+        <!-- CASOS DE PRUEBA -->
+        <div class="diagram">
+            <h2>CASOS DE PRUEBA OBLIGATORIOS</h2>
+            
+            <table>
+                <tr>
+                    <th>Caso</th>
+                    <th>Entrada</th>
+                    <th>Salida Esperada</th>
+                </tr>
+                <tr>
+                    <td>Código inválido</td>
+                    <td>Código: 123 (menos de 5 dígitos)</td>
+                    <td>Error: Código debe tener 5 dígitos</td>
+                </tr>
+                <tr>
+                    <td>Precio negativo</td>
+                    <td>Precio: -10</td>
+                    <td>Error: Precio inválido</td>
+                </tr>
+                <tr>
+                    <td>Stock insuficiente</td>
+                    <td>Stock: 5, Vender: 10</td>
+                    <td>Error: Stock insuficiente</td>
+                </tr>
+                <tr>
+                    <td>Producto duplicado</td>
+                    <td>Código: 10001 (ya existe)</td>
+                    <td>Error: Código duplicado</td>
+                </tr>
+                <tr>
+                    <td>Inventario lleno</td>
+                    <td>Agregar producto #1001</td>
+                    <td>Inventario lleno</td>
+                </tr>
+                <tr>
+                    <td>Alerta stock bajo</td>
+                    <td>Vender dejando < 10 unidades</td>
+                    <td>⚠️ ALERTA: Stock bajo!</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- NOTAS IMPORTANTES -->
+        <div class="notes">
+            <h2>📌 NOTAS IMPORTANTES PARA LOS ESTUDIANTES:</h2>
+            <ol>
+                <li><strong>Sigan EXACTAMENTE los diagramas:</strong> No agreguen ni quiten pasos. La calificación depende de que el programa haga exactamente lo que muestran los diagramas.</li>
+                
+                <li><strong>Variables globales necesarias:</strong>
+                    <ul>
+                        <li>String[] codigos = new String[1000];</li>
+                        <li>String[] nombres = new String[1000];</li>
+                        <li>double[] precios = new double[1000];</li>
+                        <li>int[] cantidades = new int[1000];</li>
+                        <li>int[] vendidos = new int[1000];</li>
+                        <li>int productos = 0; // contador de productos</li>
+                    </ul>
+                </li>
+                
+                <li><strong>Validaciones críticas:</strong>
+                    <ul>
+                        <li>SIEMPRE validar que haya productos antes de vender/reportes/estadísticas</li>
+                        <li>SIEMPRE validar entradas numéricas</li>
+                        <li>SIEMPRE verificar límites de arrays</li>
+                    </ul>
+                </li>
+                
+                <li><strong>Formato de salida:</strong> Respeten los formatos mostrados en los diagramas. Usen los mismos mensajes y símbolos (✓, ⚠️, etc.)</li>
+                
+                <li><strong>Pruebas:</strong> Prueben TODOS los casos de error antes de entregar.</li>
+            </ol>
+        </div>
+
+        <div class="example-box">
+            <h2>🎯 ESTRUCTURA RECOMENDADA DEL MAIN:</h2>
+            <pre>
+public class SistemaInventario {
+    // Variables globales aquí
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        boolean salir = false;
+        
+        while (!salir) {
+            mostrarMenu();
+            
+            if (scanner.hasNextInt()) {
+                int opcion = scanner.nextInt();
+                scanner.nextLine(); // limpiar buffer
+                
+                switch (opcion) {
+                    case 1:
+                        agregarProducto(scanner);
+                        break;
+                    case 2:
+                        venderProducto(scanner);
+                        break;
+                    // etc...
+                }
+            } else {
+                System.out.println("Error: Ingrese solo números");
+                scanner.nextLine(); // limpiar buffer
+            }
+        }
+    }
+    
+    // Métodos según los diagramas aquí
+}
+            </pre>
+        </div>
+    </div>
+</body>
+</html>
